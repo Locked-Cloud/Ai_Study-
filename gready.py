@@ -51,29 +51,31 @@ else:
 
 /////////////////////////////////////////////
 
-def path_h_cost(path):
-    last_node = path[-1]
-    return h_table[last_node]
-
 def GreedyBestFirst(graph, start, goal):
+    def path_h_cost(path):
+        return h_table[path[-1]]
+
     done = []
     queue = [[start]]
     while queue:
-        queue.sort(key=path_h_cost)  # Sort by h only
-        path = queue.pop(0)
-        node = path[-1]
+        queue.sort(key=path_h_cost)  
+        path = queue.pop(0)  # Select the path with the lowest heuristic
+        node = path[-1]  # Get the last node in the current path
+
         if node in done:
             continue
         done.append(node)
+
         if node == goal:
-            return path
-        else:
-            adj_nodes = graph.get(node, [])
-            for node2 in adj_nodes:
-                newpath = path.copy()
-                newpath.append(node2)
+            return path  # Goal reached, return the path
+
+        adj_nodes = graph.get(node, [])
+        for node2 in adj_nodes:
+            if node2 not in done:  # Avoid revisiting nodes
+                newpath = path + [node2]
                 queue.append(newpath)
-    return None
+
+    return None  # If no path is found
 
 # Example usage
 My_graph = {
