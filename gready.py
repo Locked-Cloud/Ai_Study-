@@ -97,3 +97,53 @@ h_table = {
 }
 
 print("The path by Greedy Best-First Search is:", GreedyBestFirst(My_graph, "S", "G"))
+
+
+
+////////////////////////////////////////////////////////
+
+def GreedyBestFirst(graph, start, goal):
+    visited = []   # To keep track of visited nodes
+    queue = [[start]]  # Paths to explore
+    
+    while queue:
+        # Sort the queue by the heuristic value of the last node in each path
+        queue.sort(key=lambda path: h_table[path[-1]])
+        path = queue.pop(0)  # Get the path with the smallest heuristic value
+        node = path[-1]      # Current node
+
+        if node in visited:  # Skip if already visited
+            continue
+        visited.append(node)
+
+        if node == goal:     # Return path if goal is reached
+            return path
+
+        # Add neighbors to the queue
+        for node2 in graph.get(node, []):
+            if node2 not in visited:
+                queue.append(path + [node2])
+
+    return None  # Return None if no path is found
+
+# Example usage
+My_graph = {
+    "S": ["A", "B"],
+    "A": ["B", "C"],
+    "B": ["C", "D"],
+    "C": ["G"],
+    "D": ["G"],
+    "G": []
+}
+
+h_table = {
+    "S": 7,
+    "A": 6,
+    "B": 2,
+    "C": 1,
+    "D": 1,
+    "G": 0
+}
+
+print("The path by Greedy Best-First Search is:", GreedyBestFirst(My_graph, "S", "G"))
+
