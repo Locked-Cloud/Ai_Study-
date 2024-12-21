@@ -120,7 +120,8 @@ def GreedyBestFirst(graph, start, goal):
             return path
 
         # Add neighbors to the queue
-        for node2 in graph.get(node, []):
+        adjacent_nodes = graph.get(node, [])
+        for node2 in adjacent_nodes:  # Added the missing colon here
             if node2 not in visited:
                 queue.append(path + [node2])
 
@@ -146,4 +147,3 @@ h_table = {
 }
 
 print("The path by Greedy Best-First Search is:", GreedyBestFirst(My_graph, "S", "G"))
-
