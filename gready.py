@@ -145,5 +145,6 @@ h_table = {
     "D": 1,
     "G": 0
 }
+solution = GreedyBestFirst(My_graph, "S", "G")
+print('Path is: ', solution)
 
-print("The path by Greedy Best-First Search is:", GreedyBestFirst(My_graph, "S", "G"))
